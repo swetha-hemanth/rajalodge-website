@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1">
+
+<title>
+
+Reviews | Raja Lodge Ooty
+
+</title>
+
+<link
+rel="stylesheet"
+href="css/style.css">
+
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+
+<img
+src="images/logo.jpg"
+alt="Raja Lodge Logo">
+
+<div>
+
+RAJA LODGE
+
+<span>
+
+Since 1980
+
+</span>
+
+</div>
+
+</div>
+
+<nav>
+
+<a href="home.html">
+Home
+</a>
+
+<a href="about.html">
+About
+</a>
+
+<a href="gallery.html">
+Gallery
+</a>
+
+<a href="booking.html">
+Booking
+</a>
+
+<a href="review.html">
+Reviews
+</a>
+
+<a href="contact.html">
+Contact
+</a>
+
+</nav>
+
+</header>
+
+
+
+<section class="review-page">
+
+<h1>
+
+Guest Reviews
+
+</h1>
+
+<p>
+
+See what guests say about Raja Lodge
+
+</p>
+
+
+
+<div class="review-form">
+
+<input
+
+id="name"
+
+type="text"
+
+placeholder="Your Name">
+
+
+
+<textarea
+
+id="message"
+
+placeholder="Write your review">
+
+</textarea>
+
+
+
+<select id="rating">
+
+<option value="5">
+
+⭐⭐⭐⭐⭐ Excellent
+
+</option>
+
+<option value="4">
+
+⭐⭐⭐⭐ Very Good
+
+</option>
+
+<option value="3">
+
+⭐⭐⭐ Good
+
+</option>
+
+<option value="2">
+
+⭐⭐ Fair
+
+</option>
+
+<option value="1">
+
+⭐ Poor
+
+</option>
+
+</select>
+
+
+
+<button
+onclick="addReview()">
+
+Post Review
+
+</button>
+
+</div>
+
+
+
+<div
+
+id="reviews"
+
+class="review-grid">
+
+</div>
+
+</section>
+
+
+
+<footer>
+
+© Raja Lodge Ooty
+
+</footer>
+
+
+
+<script>
+
+const defaultReviews=[
+
+{
+
+name:"Priya",
+
+message:
+
+"Clean rooms, peaceful atmosphere and good hospitality.",
+
+rating:5
+
+},
+
+{
+
+name:"Arjun",
+
+message:
+
+"Near bus stand and convenient for sightseeing.",
+
+rating:4
+
+},
+
+{
+
+name:"Meena",
+
+message:
+
+"Budget friendly and comfortable stay.",
+
+rating:5
+
+},
+
+{
+
+name:"Rahul",
+
+message:
+
+"Rooms were neat and staff were supportive.",
+
+rating:4
+
+},
+
+{
+
+name:"Divya",
+
+message:
+
+"Stayed with family and had a pleasant experience.",
+
+rating:5
+
+}
+
+];
+
+
+
+function stars(n){
+
+return "⭐".repeat(Number(n));
+
+}
+
+
+
+function getReviews(){
+
+let saved=
+
+JSON.parse(
+
+localStorage.getItem(
+
+"rajaReviews"
+
+)
+
+)
+
+|| [];
+
+
+return [
+
+...saved,
+
+...defaultReviews
+
+];
+
+}
+
+
+
+function loadReviews(){
+
+let reviews=
+
+getReviews();
+
+
+let container=
+
+document.getElementById(
+
+"reviews"
+
+);
+
+
+container.innerHTML="";
+
+
+reviews.forEach(r=>{
+
+container.innerHTML+=`
+
+<div class="card">
+
+<div>
+
+${stars(r.rating)}
+
+</div>
+
+<h2>
+
+${r.name}
+
+</h2>
+
+<p>
+
+${r.message}
+
+</p>
+
+</div>
+
+`;
+
+});
+
+}
+
+
+
+function addReview(){
+
+let name=
+
+document
+.getElementById(
+"name"
+)
+.value
+.trim();
+
+
+let message=
+
+document
+.getElementById(
+"message"
+)
+.value
+.trim();
+
+
+let rating=
+
+document
+.getElementById(
+"rating"
+)
+.value;
+
+
+if(
+
+!name||
+
+!message
+
+){
+
+alert(
+
+"Please fill all fields"
+
+);
+
+return;
+
+}
+
+
+let saved=
+
+JSON.parse(
+
+localStorage.getItem(
+
+"rajaReviews"
+
+)
+
+)
+
+|| [];
+
+
+saved.unshift({
+
+name,
+
+message,
+
+rating
+
+});
+
+
+localStorage.setItem(
+
+"rajaReviews",
+
+JSON.stringify(
+saved
+)
+
+);
+
+
+document
+.getElementById(
+"name"
+)
+.value="";
+
+
+document
+.getElementById(
+"message"
+)
+.value="";
+
+
+document
+.getElementById(
+"rating"
+)
+.value="5";
+
+
+loadReviews();
+
+}
+
+
+
+loadReviews();
+
+</script>
+
+
+</body>
+
+</html>
